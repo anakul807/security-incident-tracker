@@ -1,0 +1,23 @@
+{
+  "name": "security-incident-tracker",
+  "version": "1.0.0",
+  "description": "A small web app where employees can submit security incidents (phishing, malware, unauthorized access), and analysts/admins triage them: set severity, assign owners, change status, and add timeline notes. Includes auth, RBAC, audit log, and CSV export.",
+  "homepage": "https://github.com/anakul807/security-incident-tracker#readme",
+  "bugs": {
+    "url": "https://github.com/anakul807/security-incident-tracker/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anakul807/security-incident-tracker.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "workspaces": [
+	"packages/*"
+  ]
+}
