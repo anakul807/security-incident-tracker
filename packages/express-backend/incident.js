@@ -44,7 +44,7 @@ IncidentSchema.pre("save", async function (next){
     while (!unique){
         //generates random 5 digit number
         const randNum = Math.floor(Math.random() * 90000) + 10000
-        const newId = `event-${randNum}`;
+        const newId = `INC-${randNum}`;
         
         //Making sure it's unique
         const existing = await mongoose.models.Incident.findOne({incidentId: newId});
