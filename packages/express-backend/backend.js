@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { getIncidents } from "./incident-services.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -103,6 +104,11 @@ console.error("MongoDB connection error:", err.message);
 process.exit(1);
 }
 
+// GET /incidents
+app.get("/api/incidents", (req, res) => {
+  const { status, severity } = req.query;
 
-
-
+  getIncidents({ status, severity })
+    .then((incidents) => res.json({ incidents_list: incidents }))
+    .catch((err) => res.status(500).send(err.message));
+});
