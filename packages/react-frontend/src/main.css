@@ -1026,3 +1026,44 @@ caption {
 /**
  * Layout
  */
+/* --- Senti login page styles --- */
+:root{
+  --bg:#f7f8fa; --card:#fff; --border:#e5e7eb; --text:#111827; --muted:#6b7280;
+}
+body{ background:var(--bg); color:var(--text); }
+
+/* Top bar */
+.topbar{ position:sticky; top:0; background:#ffffffc7; backdrop-filter:blur(6px); border-bottom:1px solid var(--border); }
+.topbar__inner{ max-width:1100px; margin:0 auto; padding:10px 24px; display:flex; align-items:center; gap:8px; }
+.logo{ width:28px; height:28px; }
+.brand{ font-weight:600; font-size:20px; }
+
+/* Layout */
+.canvas{ max-width:1100px; margin:0 auto; padding:48px 24px; display:grid; grid-template-columns:1fr; gap:32px; }
+@media (min-width: 900px){ .canvas{ grid-template-columns:1fr 1fr; } }
+.decor{ position:relative; min-height:560px; display:none; }
+@media (min-width: 900px){ .decor{ display:block; } }
+.shape{ position:absolute; background:#000; opacity:.12; border-radius:12px; }
+.shape--circle{ border-radius:9999px; }
+.s1{ width:110px; height:110px; left:32px; top:32px; }
+.s2{ width:56px; height:56px; left:210px; top:320px; }
+.s3{ width:180px; height:180px; left:60px; top:260px; }
+.s4{ width:64px; height:64px; left:40px; bottom:60px; }
+
+/* Card */
+.mount{ display:flex; align-items:center; justify-content:center; }
+.card{ width:100%; max-width:560px; background:var(--card); border:1px solid var(--border); border-radius:28px; padding:40px; }
+.card__title{ text-align:center; font-size:48px; font-weight:800; margin:0 0 24px; }
+
+/* Form */
+.field{ margin-bottom:18px; }
+.label{ display:block; font-size:14px; color:var(--muted); margin-bottom:8px; }
+.input{ width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:8px; background:#f9fafb; outline:none; }
+.input:focus{ background:#fff; border-color:#d1d5db; box-shadow:0 0 0 2px #00000008; }
+.actions{ margin-top:18px; display:flex; justify-content:center; }
+.btn{ background:#1f2937; color:#fff; border:none; border-radius:14px; padding:12px 22px; font-size:18px; cursor:pointer; }
+.btn:disabled{ opacity:.6; cursor:not-allowed; }
+.error{ margin-top:8px; background:#fee2e2; color:#b91c1c; font-size:14px; padding:8px 10px; border-radius:8px; }
+
+/* Optional: keep your original layout nice after login */
+.container{ max-width:900px; margin:24px auto; padding:0 24px; }
