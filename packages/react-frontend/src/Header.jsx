@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Download, Plus, Search } from 'lucide-react';
 
 const API_URL = 'http://localhost:8085/api';
@@ -20,3 +20,5 @@ const Header = ({ user }) => {
     </header>
   );
 };
+
+export default Header;

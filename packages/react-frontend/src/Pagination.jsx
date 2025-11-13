@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Download, Plus, Search } from 'lucide-react';
 
-const API_URL = 'http://localhost:8085/api';
+const API_URL = 'http://localhost:8-85/api';
 
 const Pagination = ({ currentPage, totalPages, totalIncidents, onPageChange }) => {
   const startIndex = (currentPage - 1) * 5 + 1;
@@ -47,3 +47,5 @@ const Pagination = ({ currentPage, totalPages, totalIncidents, onPageChange }) =
     </div>
   );
 };
+
+export default Pagination;

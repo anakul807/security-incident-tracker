@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Download, Plus, Search } from 'lucide-react';
 
 const API_URL = 'http://localhost:8085/api';
@@ -51,3 +51,5 @@ export const incidents = [
   },
    
 ];
+
+export default incidents;

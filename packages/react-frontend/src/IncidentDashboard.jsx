@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Download, Plus, Search } from 'lucide-react';
+import Header from "./Header";
+import FilterBar from './FilterBar';
+import IncidentTable from './IncidentTable';
+import Pagination from './Pagination';
+import MyApp from './MyApp';
+
 
 const API_URL = 'http://localhost:8085/api';
 
