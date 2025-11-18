@@ -1,0 +1,27 @@
+name: CI Testing
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - name: Lint Express Backend
+        run: npm run lint -w packages/express-backend
+
+      - name: Lint React Frontend
+        run: npm run lint -w packages/react-frontend
+
+      - name: Build React Frontend
+        run: npm run build -w packages/react-frontend
