@@ -1,10 +1,15 @@
-import React from 'react';
-import { Download, Plus, Search } from 'lucide-react';
+import React from "react";
+import { Download, Plus, Search } from "lucide-react";
 
-const API_URL = 'http://localhost:8085/api';
+const API_URL = "http://localhost:8085/api";
 
-
-const FilterBar = ({ searchTerm, onSearchChange, filters, onFilterChange, onClearFilters }) => {
+const FilterBar = ({
+  searchTerm,
+  onSearchChange,
+  filters,
+  onFilterChange,
+  onClearFilters,
+}) => {
   return (
     <div className="flex gap-4 items-center flex-wrap">
       <div className="relative flex-1 max-w-xs">
@@ -17,11 +22,11 @@ const FilterBar = ({ searchTerm, onSearchChange, filters, onFilterChange, onClea
           onChange={(e) => onSearchChange(e.target.value)}
         />
       </div>
-      
-      <select 
+
+      <select
         className="px-4 py-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        value={filters.status || ''}
-        onChange={(e) => onFilterChange('status', e.target.value)}
+        value={filters.status || ""}
+        onChange={(e) => onFilterChange("status", e.target.value)}
       >
         <option value="">Status</option>
         <option value="Open">Open</option>
@@ -30,10 +35,10 @@ const FilterBar = ({ searchTerm, onSearchChange, filters, onFilterChange, onClea
         <option value="Closed">Closed</option>
       </select>
 
-      <select 
+      <select
         className="px-4 py-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        value={filters.priority || ''}
-        onChange={(e) => onFilterChange('priority', e.target.value)}
+        value={filters.priority || ""}
+        onChange={(e) => onFilterChange("priority", e.target.value)}
       >
         <option value="">Priority</option>
         <option value="Critical">Critical</option>
@@ -42,10 +47,10 @@ const FilterBar = ({ searchTerm, onSearchChange, filters, onFilterChange, onClea
         <option value="Low">Low</option>
       </select>
 
-      <select 
+      <select
         className="px-4 py-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        value={filters.category || ''}
-        onChange={(e) => onFilterChange('category', e.target.value)}
+        value={filters.category || ""}
+        onChange={(e) => onFilterChange("category", e.target.value)}
       >
         <option value="">Category</option>
         <option value="Unauthorized Access">Unauthorized Access</option>
@@ -54,7 +59,7 @@ const FilterBar = ({ searchTerm, onSearchChange, filters, onFilterChange, onClea
         <option value="Phishing">Phishing</option>
       </select>
 
-      <button 
+      <button
         onClick={onClearFilters}
         className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition"
       >

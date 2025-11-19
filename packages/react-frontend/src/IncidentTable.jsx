@@ -1,7 +1,7 @@
-import React from 'react';
-import { Download, Plus, Search } from 'lucide-react';
+import React from "react";
+import { Download, Plus, Search } from "lucide-react";
 
-const API_URL = 'http://localhost:8085/api';
+const API_URL = "http://localhost:8085/api";
 
 const IncidentTable = ({ incidents, loading }) => {
   if (loading) {
@@ -25,20 +25,37 @@ const IncidentTable = ({ incidents, loading }) => {
       <table className="w-full">
         <thead className="bg-gray-100">
           <tr>
-            <th className="text-left px-6 py-3 font-semibold text-gray-700">Title</th>
-            <th className="text-left px-6 py-3 font-semibold text-gray-700">Priority</th>
-            <th className="text-left px-6 py-3 font-semibold text-gray-700">Status</th>
-            <th className="text-left px-6 py-3 font-semibold text-gray-700">Category</th>
-            <th className="text-left px-6 py-3 font-semibold text-gray-700">Assigned to</th>
-            <th className="text-left px-6 py-3 font-semibold text-gray-700">Last Updated</th>
+            <th className="text-left px-6 py-3 font-semibold text-gray-700">
+              Title
+            </th>
+            <th className="text-left px-6 py-3 font-semibold text-gray-700">
+              Priority
+            </th>
+            <th className="text-left px-6 py-3 font-semibold text-gray-700">
+              Status
+            </th>
+            <th className="text-left px-6 py-3 font-semibold text-gray-700">
+              Category
+            </th>
+            <th className="text-left px-6 py-3 font-semibold text-gray-700">
+              Assigned to
+            </th>
+            <th className="text-left px-6 py-3 font-semibold text-gray-700">
+              Last Updated
+            </th>
           </tr>
         </thead>
         <tbody>
           {incidents.map((incident) => (
-            <tr key={incident._id} className="border-t hover:bg-gray-50 transition">
+            <tr
+              key={incident._id}
+              className="border-t hover:bg-gray-50 transition"
+            >
               <td className="px-6 py-4">
                 <div className="font-semibold">{incident.title}</div>
-                <div className="text-sm text-gray-500">{incident.incidentId}</div>
+                <div className="text-sm text-gray-500">
+                  {incident.incidentId}
+                </div>
               </td>
               <td className="px-6 py-4">
                 <Badge type={incident.priority}>{incident.priority}</Badge>
@@ -53,7 +70,9 @@ const IncidentTable = ({ incidents, loading }) => {
                   <span>{incident.assignedTo}</span>
                 </div>
               </td>
-              <td className="px-6 py-4 text-gray-600">{incident.lastUpdated}</td>
+              <td className="px-6 py-4 text-gray-600">
+                {incident.lastUpdated}
+              </td>
             </tr>
           ))}
         </tbody>

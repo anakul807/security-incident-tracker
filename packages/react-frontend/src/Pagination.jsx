@@ -1,9 +1,14 @@
-import React from 'react';
-import { Download, Plus, Search } from 'lucide-react';
+import React from "react";
+import { Download, Plus, Search } from "lucide-react";
 
-const API_URL = 'http://localhost:8-85/api';
+const API_URL = "http://localhost:8-85/api";
 
-const Pagination = ({ currentPage, totalPages, totalIncidents, onPageChange }) => {
+const Pagination = ({
+  currentPage,
+  totalPages,
+  totalIncidents,
+  onPageChange,
+}) => {
   const startIndex = (currentPage - 1) * 5 + 1;
   const endIndex = Math.min(currentPage * 5, totalIncidents);
 
@@ -13,7 +18,7 @@ const Pagination = ({ currentPage, totalPages, totalIncidents, onPageChange }) =
         Showing {startIndex} to {endIndex} ({totalIncidents} total)
       </div>
       <div className="flex gap-2">
-        <button 
+        <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
           className="px-4 py-2 border rounded-lg bg-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition"
@@ -27,16 +32,16 @@ const Pagination = ({ currentPage, totalPages, totalIncidents, onPageChange }) =
               key={page}
               onClick={() => onPageChange(page)}
               className={`px-4 py-2 rounded-lg transition ${
-                page === currentPage 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-white border hover:bg-gray-50'
+                page === currentPage
+                  ? "bg-blue-600 text-white"
+                  : "bg-white border hover:bg-gray-50"
               }`}
             >
               {page}
             </button>
           );
         })}
-        <button 
+        <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
           className="px-4 py-2 border rounded-lg bg-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition"

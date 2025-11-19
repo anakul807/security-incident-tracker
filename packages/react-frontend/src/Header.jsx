@@ -1,8 +1,7 @@
-import React from 'react';
-import { Download, Plus, Search } from 'lucide-react';
+import React from "react";
+import { Download, Plus, Search } from "lucide-react";
 
-const API_URL = 'http://localhost:8085/api';
-
+const API_URL = "http://localhost:8085/api";
 
 const Header = ({ user }) => {
   return (

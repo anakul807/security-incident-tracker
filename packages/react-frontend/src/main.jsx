@@ -6,10 +6,9 @@ import LoginPage from "./LoginPage";
 import IncidentDashboard from "./IncidentDashboard";
 import "./main.css";
 
-
 function ProtectedRoute({ children }) {
-    const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"));
-    return isLoggedIn ? children : <Navigate to="/login" replace />;
+  const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"));
+  return isLoggedIn ? children : <Navigate to="/login" replace />;
 }
 
 // Main app router
@@ -34,8 +33,6 @@ function AppRouter() {
     </BrowserRouter>
   );
 }
-
-
 
 //Create the container
 const container = document.getElementById("root");
