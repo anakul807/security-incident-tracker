@@ -6,12 +6,15 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
+    "lint": "npx eslint . --ext .js,.jsx && npx prettier --check .",
+    "lint:fix": "npx eslint . --ext .js,.jsx --fix && npx prettier --write .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "lucide-react": "^0.554.0",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.9.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

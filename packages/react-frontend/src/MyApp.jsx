@@ -27,9 +27,9 @@ function MyApp() {
       });
   }
 
-//   function updateList(person) {
-// 	setCharacters([...characters, person]);
-//   }
+  //   function updateList(person) {
+  // 	setCharacters([...characters, person]);
+  //   }
 
   function fetchUsers() {
     const promise = fetch("http://localhost:8085/users");
@@ -41,7 +41,7 @@ function MyApp() {
     return fetch("http://localhost:8085/users", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(person),
     });
@@ -58,32 +58,28 @@ function MyApp() {
         return response.json();
       })
       .then((newUser) => {
-        setCharacters([...characters, newUser])
+        setCharacters([...characters, newUser]);
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
   }
 
   useEffect(() => {
-  fetchUsers()
-	  .then((res) => res.json())
-	  .then((json) => setCharacters(json["users_list"]))
-	  .catch((error) => { console.log(error); });
-}, [] );
+    fetchUsers()
+      .then((res) => res.json())
+      .then((json) => setCharacters(json["users_list"]))
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <div className="container">
-      <Table 
-	      characterData={characters}
-	      removeCharacter={removeOneCharacter}
-	    />
-      <Form handleSubmit={updateList}/>
+      <Table characterData={characters} removeCharacter={removeOneCharacter} />
+      <Form handleSubmit={updateList} />
     </div>
   );
 }
-
-
-
 
 export default MyApp;

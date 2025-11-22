@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { getIncidents } from "./incident-services.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,11 +18,10 @@ import {
   findUserById,
   addUser,
   findUserByNameAndJob,
-  deleteUserById
+  deleteUserById,
 } from "./user-services.js";
 
 const app = express();
-
 
 app.use(cors());
 app.use(express.json());
@@ -29,25 +29,23 @@ app.use(express.json());
 const uri = process.env.MONGO_URI;
 const PORT = process.env.PORT || 8085;
 
-app.get("/", (req, res) =>
- {
-    res.send("Hello World!");
- })
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 app.get("/users", (req, res) => {
-    const { name, job } = req.query;
-    let query; 
+  const { name, job } = req.query;
+  let query;
 
-    if (name && job) {
-      query = findUserByNameAndJob(name, job);
-    } else {
-      query = getUsers(name, job);
-    }
+  if (name && job) {
+    query = findUserByNameAndJob(name, job);
+  } else {
+    query = getUsers(name, job);
+  }
 
-    query
-      .then((users) => res.send({ users_list: users}))
-      .catch((err) => res.status(500).send(err.message));
-    
+  query
+    .then((users) => res.send({ users_list: users }))
+    .catch((err) => res.status(500).send(err.message));
 });
 
 // GET /users/:id fetching the user by mongoDB id
@@ -55,14 +53,14 @@ app.get("/users/:id", (req, res) => {
   const id = req.params["id"];
 
   findUserById(id)
-    .then(user => {
+    .then((user) => {
       if (!user) {
         res.status(404).send("Resource not found.");
       } else {
         res.send(user);
       }
     })
-    .catch(err => res.status(500).json(err.message));
+    .catch((err) => res.status(500).json(err.message));
 });
 
 app.post("/users", (req, res) => {
@@ -88,21 +86,26 @@ app.delete("/users/:id", (req, res) => {
 });
 
 if (!uri) {
-console.error("Missing MONGO_URI in .env");
-process.exit(1);
+  console.error("Missing MONGO_URI in .env");
+  process.exit(1);
 }
 
 try {
-await mongoose.connect(uri, { serverSelectionTimeoutMS: 8000 });
-console.log("Connected to MongoDB (Atlas)");
-app.listen(PORT, () =>
-console.log(`Server listening at http://localhost:${PORT}`)
-);
+  await mongoose.connect(uri, { serverSelectionTimeoutMS: 8000 });
+  console.log("Connected to MongoDB (Atlas)");
+  app.listen(PORT, () =>
+    console.log(`Server listening at http://localhost:${PORT}`),
+  );
 } catch (err) {
-console.error("MongoDB connection error:", err.message);
-process.exit(1);
+  console.error("MongoDB connection error:", err.message);
+  process.exit(1);
 }
 
+// GET /incidents
+app.get("/api/incidents", (req, res) => {
+  const { status, severity } = req.query;
 
-
-
+  getIncidents({ status, severity })
+    .then((incidents) => res.json({ incidents_list: incidents }))
+    .catch((err) => res.status(500).send(err.message));
+});
