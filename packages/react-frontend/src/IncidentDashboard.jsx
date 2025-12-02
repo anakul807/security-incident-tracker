@@ -36,12 +36,23 @@ const IncidentDashboard = () => {
       }
 
       const data = await response.json();
-      setIncidents(data.incidents);
-      setTotalPages(data.totalPages);
-      setTotalIncidents(data.totalIncidents);
+
+      // Defensive assignments
+      const safeIncidents = Array.isArray(data?.incidents) ? data.incidents : [];
+      const safeTotalPages = Number.isFinite(Number(data?.totalPages)) ? Number(data.totalPages) : 1;
+      const safeTotalIncidents = Number.isFinite(Number(data?.totalIncidents)) ? Number(data.totalIncidents) : 0;
+
+
+      // inside the parentheses used to include the data.incidents, data.totalPages, data.totalIncidents
+      setIncidents(safeIncidents);
+      setTotalPages(safeTotalPages);
+      setTotalIncidents(safeTotalIncidents);
       setError(null);
     } catch (err) {
-      setError(err.message);
+      setError(err?.message || "Unknown error");
+      setIncidents([]); // ensure safe defaults after failures
+      setTotalPages(1);
+      setTotalIncidents(0);
       console.error("Error fetching incidents:", err);
     } finally {
       setLoading(false);
@@ -90,6 +101,9 @@ const IncidentDashboard = () => {
     }
   };
 
+  // ensure we always pass an array down to the table
+  const safeIncidents2 = Array.isArray(incidents) ? incidents : [];
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header user={{ name: "John Smith", role: "Security Analyst" }} />
@@ -127,8 +141,8 @@ const IncidentDashboard = () => {
         />
 
         <div className="mt-6">
-          <IncidentTable incidents={incidents} loading={loading} />
-          {!loading && incidents.length > 0 && (
+          <IncidentTable incidents={safeIncidents2} loading={loading} />
+          {!loading && Array.isArray(safeIncidents2) && safeIncidents2.length > 0 && (
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}

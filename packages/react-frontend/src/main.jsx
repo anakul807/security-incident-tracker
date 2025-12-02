@@ -1,8 +1,10 @@
 // src/main.jsx
+// also used as the router for pages!
 import React from "react";
 import ReactDOMClient from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./LoginPage";
+import SignUpPage from "./SignUpPage";
 import IncidentDashboard from "./IncidentDashboard";
 import "./main.css";
 
@@ -16,7 +18,9 @@ function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
 
         <Route
           path="/incidents"
@@ -28,7 +32,7 @@ function AppRouter() {
         />
 
         {/* Default: go to login */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
