@@ -42,6 +42,10 @@ export function findUserByNameAndJob(name, job) {
   return userModel.find({ name, job });
 }
 
+export const findUserByUsername = (username) => {
+  return userModel.findOne({ username });
+}
+
 export default {
   addUser,
   getUsers,
@@ -49,4 +53,5 @@ export default {
   findUserByName,
   findUserByJob,
   deleteUserById,
+  findUserByUsername,
 };

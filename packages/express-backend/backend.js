@@ -19,6 +19,7 @@ import {
   addUser,
   findUserByNameAndJob,
   deleteUserById,
+  findUserByUsername,
 } from "./user-services.js";
 
 const app = express();
@@ -31,6 +32,81 @@ const PORT = process.env.PORT || 8085;
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
+});
+
+// Login route
+app.options("/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ message: "Email and password are required." });
+  }
+
+  try {
+    const user = await findUserByUsername(username);
+
+    // if there is no user OR password mismatch -> unauthorized
+    if (!user || user.password !== password) {
+      return res.status(401).json({ message: "Invalid email or password"});
+    }
+
+    const userObj = user.toObject ? user.toObject() : user;
+    const { password: _pw, ...safeUser } = userObj;
+
+    return res.json({
+      message: "Login successful",
+      user: safeUser,
+    });
+  }
+  catch(err) {
+      console.err("Login error:", err);
+      return res 
+        .status(500)
+        .json({ message: "server error during login." });
+    }
+})
+
+// Register account route
+app.post("/register", async (req, res) => {
+  const { username, password } = req.body;
+  console.log("/register body:", req.body);
+
+  if (!username || !password) {
+    return res 
+      .status(400)
+      .json({ message: "Username and password are required." });
+  }
+
+  try {
+    // check if the username already exists
+    const existing = await findUserByUsername(username);
+    if (existing) {
+      return res 
+        .status(409)
+        .json({ message: "Username already taken." });
+    }
+
+    // if not existing --> add user to DB
+    const newUser = await addUser({ username, password });
+
+    const newUserObj = newUser.toObject ? newUser.toObject() : newUser;
+    const { password: _pw, ...safeUser } = newUserObj;
+
+    return res.status(201).json({
+      message: "Registration successful",
+      user: safeUser,
+    });
+
+  } catch (err) {
+    console.error("Register error:", err);
+    return res
+      .status(500)
+      .json({ message: "Server error during registration." });
+  }
+
+
 });
 
 app.get("/users", (req, res) => {
