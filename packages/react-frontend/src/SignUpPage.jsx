@@ -1,8 +1,8 @@
-// src/LoginPage.jsx
+// src/SignUpPage.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function LoginPage() {
+function SignUpPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ function LoginPage() {
 
         <section className="mount">
           <div className="card">
-            <h1 className="card__title">Login</h1>
+            <h1 className="card__title">Sign Up</h1>
 
             <form
               onSubmit={async (e) => {
@@ -37,14 +37,16 @@ function LoginPage() {
                 const username = (fd.get("username") || "").toString().trim();
                 const password = (fd.get("password") || "").toString();
 
-                if (!username) return setError("Please enter your username.");
-                if (!password) return setError("Please enter your password.");
+                if (!username)
+                  return setError("Please enter a username.");
+                if (!password)
+                  return setError("Please enter a password.");
 
                 setError("");
                 setLoading(true);
 
                 try {
-                  const res = await fetch("http://localhost:8085/login", {
+                  const res = await fetch("http://localhost:8085/register", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ username, password }),
@@ -53,27 +55,23 @@ function LoginPage() {
                   const data = await res.json();
 
                   if (!res.ok) {
-                    setError(data.message || "Login failed" );
+                    setError(data.message || "Registration failed.");
                     setLoading(false);
                     return;
                   }
 
-                  // Successful Login
-                localStorage.setItem("isLoggedIn", "true");
+                  // Registration success – you can either log them in automatically:
+                  // localStorage.setItem("isLoggedIn", "true");
+                  // navigate("/incidents");
 
-                navigate("/incidents");
-
-                // TODO: Replace this with your backend login request
-                // console.log("Login submitted:", { username, password });
-                // alert(`Logged in as ${username}`);
-
+                  // or send them to the login page:
+                  navigate("/login");
                 } catch (err) {
-                  console.error("Login error:", err);
+                  console.error("Register error (frontend):", err);
                   setError("Network error, please try again.");
                 } finally {
                   setLoading(false);
                 }
-
               }}
             >
               <div className="field">
@@ -84,7 +82,7 @@ function LoginPage() {
                   className="input"
                   id="username"
                   name="username"
-                  placeholder="Username"
+                  placeholder="Choose a username"
                 />
               </div>
 
@@ -97,17 +95,29 @@ function LoginPage() {
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="Password"
+                  placeholder="Choose a password"
                 />
               </div>
 
               {error && <div className="error">{error}</div>}
 
               <div className="actions">
-                <button className="btn" type="submit" disabled ={loading}>
-                  {loading ? "Logging in..." : "Submit"}
+                <button className="btn" type="submit" disabled={loading}>
+                  {loading ? "Signing up..." : "Create Account"}
                 </button>
               </div>
+
+              {/* If the user already has an account */}
+              <div className="helper-test" style={{marginTop: "1rem", textAlign: "center"}}>
+                Already have an account?{" "}
+                <span
+                    onClick={() => navigate("/login")}
+                    style={{ color: "#1f50ff", cursor: "pointer", fontWeight: "bold"}}
+                >
+                    Log In
+                </span>
+              </div>
+
             </form>
           </div>
         </section>
@@ -135,4 +145,4 @@ function ShieldLogo({ className = "" }) {
   );
 }
 
-export default LoginPage;
+export default SignUpPage;
