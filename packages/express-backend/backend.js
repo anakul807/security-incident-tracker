@@ -38,6 +38,7 @@ app.get("/", (req, res) => {
 app.options("/login", async (req, res) => {
   const { username, password } = req.body;
 
+  // error check if no username or password are filled out
   if (!username || !password) {
     return res
       .status(400)
@@ -73,6 +74,7 @@ app.post("/register", async (req, res) => {
   const { username, password } = req.body;
   console.log("/register body:", req.body);
 
+  // if the user doesn't provide a username or password then return an error message
   if (!username || !password) {
     return res 
       .status(400)
@@ -94,11 +96,13 @@ app.post("/register", async (req, res) => {
     const newUserObj = newUser.toObject ? newUser.toObject() : newUser;
     const { password: _pw, ...safeUser } = newUserObj;
 
+    // registration is successful
     return res.status(201).json({
       message: "Registration successful",
       user: safeUser,
     });
 
+    // error checking
   } catch (err) {
     console.error("Register error:", err);
     return res
@@ -108,6 +112,53 @@ app.post("/register", async (req, res) => {
 
 
 });
+
+// Don't allow user to be logged in if they have not signed up
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  console.log("/login body:", req.body);
+
+  if (!username || !password) {
+    return res 
+      .status(400)
+      .json({ message: "Username and password are required" });
+  }
+
+  try {
+    // look for user in the DB
+    const user = await findUserByUsername(username);
+
+    // if there isn't a user then return an error message
+    if (!user) {
+      return res 
+        .status(401)
+        .json({ message: "Invalid username or password." });
+    }
+
+    // if the password doesn't match then return an error
+    if (user.password !== password) {
+      return res  
+        .status(401)
+        .json({ message: "invalid username or password." });
+    }
+
+    // credentials are correct --> success
+    const userObj = user.toObject ? user.toObject() : user;
+    const { password: _pw, ...safeUser } = userObj;
+
+    return res.json({
+      message: "Login successful",
+      user: safeUser,
+    });
+  } catch (err) {
+    console.error("Login error:", err);
+    return res 
+      .status(500)
+      .json({ message: "server error during login. "})
+  }
+
+
+})
 
 app.get("/users", (req, res) => {
   const { name, job } = req.query;
