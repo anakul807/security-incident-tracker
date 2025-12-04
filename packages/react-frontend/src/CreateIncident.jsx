@@ -7,12 +7,12 @@ function CreateIncident({ isOpen, onClose, onSubmit }) {
     category: "",
     assignedTo: "",
     description: "",
-    attachments: []
+    attachments: [],
   });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setIncident(prev => ({ ...prev, [name]: value }));
+    setIncident((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
@@ -24,13 +24,13 @@ function CreateIncident({ isOpen, onClose, onSubmit }) {
       category: "",
       assignedTo: "",
       description: "",
-      attachments: []
+      attachments: [],
     });
   };
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
-    setIncident(prev => ({ ...prev, attachments: files }));
+    setIncident((prev) => ({ ...prev, attachments: files }));
   };
 
   if (!isOpen) return null;
@@ -40,7 +40,9 @@ function CreateIncident({ isOpen, onClose, onSubmit }) {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>Create Incident</h2>
-          <button className="close-button" onClick={onClose}>×</button>
+          <button className="close-button" onClick={onClose}>
+            ×
+          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="incident-form">
@@ -111,7 +113,7 @@ function CreateIncident({ isOpen, onClose, onSubmit }) {
                 id="attachments"
                 multiple
                 onChange={handleFileChange}
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
               />
               <label htmlFor="attachments" className="file-input-label">
                 <span className="attach-icon">📎</span>
@@ -121,7 +123,9 @@ function CreateIncident({ isOpen, onClose, onSubmit }) {
             {incident.attachments.length > 0 && (
               <div className="file-list">
                 {incident.attachments.map((file, index) => (
-                  <span key={index} className="file-name">{file.name}</span>
+                  <span key={index} className="file-name">
+                    {file.name}
+                  </span>
                 ))}
               </div>
             )}
