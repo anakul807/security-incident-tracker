@@ -72,7 +72,7 @@ function MyApp() {
     <div className="container">
       <div className="header">
         <h1>Incident Management</h1>
-        <button 
+        <button
           className="new-incident-button"
           onClick={() => setIsModalOpen(true)}
         >
