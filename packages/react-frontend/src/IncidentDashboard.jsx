@@ -38,10 +38,15 @@ const IncidentDashboard = () => {
       const data = await response.json();
 
       // Defensive assignments
-      const safeIncidents = Array.isArray(data?.incidents) ? data.incidents : [];
-      const safeTotalPages = Number.isFinite(Number(data?.totalPages)) ? Number(data.totalPages) : 1;
-      const safeTotalIncidents = Number.isFinite(Number(data?.totalIncidents)) ? Number(data.totalIncidents) : 0;
-
+      const safeIncidents = Array.isArray(data?.incidents)
+        ? data.incidents
+        : [];
+      const safeTotalPages = Number.isFinite(Number(data?.totalPages))
+        ? Number(data.totalPages)
+        : 1;
+      const safeTotalIncidents = Number.isFinite(Number(data?.totalIncidents))
+        ? Number(data.totalIncidents)
+        : 0;
 
       // inside the parentheses used to include the data.incidents, data.totalPages, data.totalIncidents
       setIncidents(safeIncidents);
@@ -142,14 +147,16 @@ const IncidentDashboard = () => {
 
         <div className="mt-6">
           <IncidentTable incidents={safeIncidents2} loading={loading} />
-          {!loading && Array.isArray(safeIncidents2) && safeIncidents2.length > 0 && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              totalIncidents={totalIncidents}
-              onPageChange={setCurrentPage}
-            />
-          )}
+          {!loading &&
+            Array.isArray(safeIncidents2) &&
+            safeIncidents2.length > 0 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                totalIncidents={totalIncidents}
+                onPageChange={setCurrentPage}
+              />
+            )}
         </div>
       </main>
     </div>

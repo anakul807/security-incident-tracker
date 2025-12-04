@@ -1,7 +1,7 @@
 export default [
   {
     ignores: ["node_modules/**", "dist/**"],
-// runs on any js or jsx file
+    // runs on any js or jsx file
     files: ["**/*.js", "**/*.jsx"],
 
     languageOptions: {

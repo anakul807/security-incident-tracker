@@ -37,10 +37,8 @@ function SignUpPage() {
                 const username = (fd.get("username") || "").toString().trim();
                 const password = (fd.get("password") || "").toString();
 
-                if (!username)
-                  return setError("Please enter a username.");
-                if (!password)
-                  return setError("Please enter a password.");
+                if (!username) return setError("Please enter a username.");
+                if (!password) return setError("Please enter a password.");
 
                 setError("");
                 setLoading(true);
@@ -108,16 +106,22 @@ function SignUpPage() {
               </div>
 
               {/* If the user already has an account */}
-              <div className="helper-test" style={{marginTop: "1rem", textAlign: "center"}}>
+              <div
+                className="helper-test"
+                style={{ marginTop: "1rem", textAlign: "center" }}
+              >
                 Already have an account?{" "}
                 <span
-                    onClick={() => navigate("/login")}
-                    style={{ color: "#1f50ff", cursor: "pointer", fontWeight: "bold"}}
+                  onClick={() => navigate("/login")}
+                  style={{
+                    color: "#1f50ff",
+                    cursor: "pointer",
+                    fontWeight: "bold",
+                  }}
                 >
-                    Log In
+                  Log In
                 </span>
               </div>
-
             </form>
           </div>
         </section>
