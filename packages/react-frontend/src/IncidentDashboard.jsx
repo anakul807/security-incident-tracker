@@ -4,8 +4,8 @@ import Header from "./Header";
 import FilterBar from "./FilterBar";
 import IncidentTable from "./IncidentTable";
 import Pagination from "./Pagination";
-import MyApp from "./MyApp";
 import CreateIncident from './CreateIncident';
+import Badge from "./Badge";
 
 
 const API_URL = "http://localhost:8085/api";

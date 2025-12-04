@@ -1,31 +1,72 @@
 import React, { useState } from "react";
 import "./style.css";
 
-function CreateIncident({ isOpen, onClose, onSubmit }) {
+const API_URL = "http://localhost:8085/api";
+
+function CreateIncident({ isOpen, onClose, onIncidentCreated }) {
   const [incident, setIncident] = useState({
     title: "",
     category: "",
+    priority: "",
     assignedTo: "",
     description: "",
     attachments: [],
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setIncident((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(incident);
-    // Reset form
-    setIncident({
-      title: "",
-      category: "",
-      assignedTo: "",
-      description: "",
-      attachments: [],
-    });
+    setError("");
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(`${API_URL}/incidents`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: incident.title,
+          category: incident.category,
+          priority: incident.priority,
+          assignedTo: incident.assignedTo || "Unassigned",
+          description: incident.description,
+          status: "Open", // Default status for new incidents
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create incident");
+      }
+
+      const newIncident = await response.json();
+
+      // Reset form
+      setIncident({
+        title: "",
+        category: "",
+        priority: "",
+        assignedTo: "",
+        description: "",
+        attachments: [],
+      });
+
+      // Call the callback to refresh the incidents list
+      if (onIncidentCreated) {
+        onIncidentCreated(newIncident);
+      }
+    } catch (err) {
+      console.error("Error creating incident:", err);
+      setError(err.message || "Failed to create incident. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleFileChange = (e) => {
@@ -68,13 +109,30 @@ function CreateIncident({ isOpen, onClose, onSubmit }) {
               onChange={handleChange}
               required
             >
-              <option value="">Category</option>
-              <option value="malware">Malware</option>
-              <option value="phishing">Phishing</option>
-              <option value="ddos">DDoS Attack</option>
-              <option value="data-breach">Data Breach</option>
-              <option value="unauthorized-access">Unauthorized Access</option>
-              <option value="other">Other</option>
+              <option value="">Select Category</option>
+              <option value="Malware">Malware</option>
+              <option value="Phishing">Phishing</option>
+              <option value="DDoS">DDoS Attack</option>
+              <option value="Data Breach">Data Breach</option>
+              <option value="Unauthorized Access">Unauthorized Access</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="priority">Priority</label>
+            <select
+              id="priority"
+              name="priority"
+              value={incident.priority}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Priority</option>
+              <option value="Critical">Critical</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
             </select>
           </div>
 
@@ -131,12 +189,35 @@ function CreateIncident({ isOpen, onClose, onSubmit }) {
             )}
           </div>
 
+          {error && (
+            <div className="error" style={{ 
+              marginBottom: "20px", 
+              padding: "12px", 
+              backgroundColor: "#fee2e2", 
+              color: "#b91c1c", 
+              borderRadius: "6px",
+              fontSize: "14px"
+            }}>
+              {error}
+            </div>
+          )}
+
           <div className="form-actions">
-            <button type="button" className="cancel-button" onClick={onClose}>
+            <button 
+              type="button" 
+              className="cancel-button" 
+              onClick={onClose}
+              disabled={isSubmitting}
+            >
               Cancel
             </button>
-            <button type="submit" className="submit-button">
-              Create Incident
+            <button 
+              type="submit" 
+              className="submit-button"
+              disabled={isSubmitting}
+              style={{ margin: "0 auto" }}
+            >
+              {isSubmitting ? "Creating..." : "Create"}
             </button>
           </div>
         </form>
