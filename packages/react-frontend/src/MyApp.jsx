@@ -2,13 +2,13 @@
 import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import Form from "./Form";
+import CreateIncident from "./CreateIncident";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function removeOneCharacter(userId) {
-    //const userToDelete = characters[index];
-
     fetch(`http://localhost:8085/users/${userId}`, {
       method: "DELETE",
     })
@@ -27,17 +27,12 @@ function MyApp() {
       });
   }
 
-  //   function updateList(person) {
-  // 	setCharacters([...characters, person]);
-  //   }
-
   function fetchUsers() {
     const promise = fetch("http://localhost:8085/users");
     return promise;
   }
 
   function postUser(person) {
-    //const promise =
     return fetch("http://localhost:8085/users", {
       method: "POST",
       headers: {
@@ -45,12 +40,10 @@ function MyApp() {
       },
       body: JSON.stringify(person),
     });
-
-    //return promise;
   }
 
-  function updateList(person) {
-    postUser(person)
+  function handleCreateIncident(incident) {
+    postUser(incident)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to create user");
@@ -59,6 +52,7 @@ function MyApp() {
       })
       .then((newUser) => {
         setCharacters([...characters, newUser]);
+        setIsModalOpen(false); // Close modal on success
       })
       .catch((error) => {
         console.log(error);
@@ -76,8 +70,23 @@ function MyApp() {
 
   return (
     <div className="container">
+      <div className="header">
+        <h1>Incident Management</h1>
+        <button 
+          className="new-incident-button"
+          onClick={() => setIsModalOpen(true)}
+        >
+          + New Incident
+        </button>
+      </div>
+
       <Table characterData={characters} removeCharacter={removeOneCharacter} />
-      <Form handleSubmit={updateList} />
+
+      <CreateIncidentModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleCreateIncident}
+      />
     </div>
   );
 }
