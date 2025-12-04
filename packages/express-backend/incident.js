@@ -59,7 +59,7 @@ const IncidentSchema = new Schema(
   },
   {
     collection: "incidents",
-  }
+  },
 );
 
 IncidentSchema.pre("save", async function (next) {
