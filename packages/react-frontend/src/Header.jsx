@@ -21,7 +21,9 @@ const Header = ({ user }) => {
 
       {/* Center navigation */}
       <nav className="nav__links">
-        <Link to="/incidents" className="nav__link">Incidents</Link>
+        <Link to="/incidents" className="nav__link">
+          Incidents
+        </Link>
       </nav>
 
       {/* Right user section */}
@@ -38,7 +40,12 @@ const Header = ({ user }) => {
 
 function ShieldLogo({ className = "" }) {
   return (
-    <svg viewBox="0 0 40 40" className={className} fill="none" aria-hidden="true">
+    <svg
+      viewBox="0 0 40 40"
+      className={className}
+      fill="none"
+      aria-hidden="true"
+    >
       <path
         d="M20 3.5L6.5 8.5v10.8c0 7.1 5.1 13.7 13.5 17.2 8.4-3.5 13.5-10.1 13.5-17.2V8.5L20 3.5Z"
         stroke="#1f50ff"

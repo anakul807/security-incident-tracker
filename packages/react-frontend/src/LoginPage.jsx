@@ -63,7 +63,6 @@ function LoginPage() {
                   localStorage.setItem("isLoggedIn", "true");
                   localStorage.setItem("user", JSON.stringify(data.user));
 
-
                   navigate("/incidents");
 
                   // TODO: Replace this with your backend login request

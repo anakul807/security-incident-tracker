@@ -61,10 +61,7 @@ function IncidentDetail() {
       <div className="detail-page">
         <Header user={JSON.parse(localStorage.getItem("user"))} />
         <main className="detail-main">
-          <button
-            onClick={() => navigate(-1)}
-            className="detail-back"
-          >
+          <button onClick={() => navigate(-1)} className="detail-back">
             <span className="detail-back__icon">←</span>
             <span>Back</span>
           </button>
@@ -83,10 +80,7 @@ function IncidentDetail() {
       <div className="detail-page">
         <Header user={JSON.parse(localStorage.getItem("user"))} />
         <main className="detail-main">
-          <button
-            onClick={() => navigate(-1)}
-            className="detail-back"
-          >
+          <button onClick={() => navigate(-1)} className="detail-back">
             <span className="detail-back__icon">←</span>
             <span>Back</span>
           </button>
@@ -109,10 +103,7 @@ function IncidentDetail() {
 
       <main className="detail-main">
         {/* Back link */}
-        <button
-          onClick={() => navigate(-1)}
-          className="detail-back"
-        >
+        <button onClick={() => navigate(-1)} className="detail-back">
           <span className="detail-back__icon">←</span>
           <span>Back</span>
         </button>
