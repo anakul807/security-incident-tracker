@@ -1,0 +1,196 @@
+/* Layout */
+.detail-page {
+  min-height: 100vh;
+  background-color: #f5f6fa; /* light gray background similar to prototype */
+}
+
+.detail-main {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 40px 40px;
+}
+
+/* Back link */
+.detail-back {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.detail-back__icon {
+  font-size: 16px;
+}
+
+/* Card */
+.detail-card {
+  background-color: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  padding: 32px 40px 40px;
+}
+
+/* Header row */
+.detail-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.detail-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detail-title {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #111827;
+}
+
+/* Priority dot */
+.detail-priority-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background-color: #e5e7eb;
+}
+
+.detail-priority-dot--critical {
+  background-color: #ef4444; /* red */
+}
+
+.detail-priority-dot--high {
+  background-color: #f97316; /* orange */
+}
+
+.detail-priority-dot--medium {
+  background-color: #f59e0b; /* yellow */
+}
+
+.detail-priority-dot--low {
+  background-color: #22c55e; /* green */
+}
+
+/* Status pill */
+.detail-status-pill {
+  border: none;
+  background-color: #1f50ff;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 8px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 6px 18px rgba(31, 80, 255, 0.4);
+  cursor: default;
+}
+
+.detail-status-pill__label {
+  opacity: 0.9;
+}
+
+.detail-status-pill__value {
+  font-style: italic;
+  font-weight: 600;
+}
+
+.detail-status-pill__caret {
+  font-size: 10px;
+  opacity: 0.9;
+}
+
+/* Meta row */
+.detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+  margin-bottom: 22px;
+  font-size: 13px;
+  color: #374151;
+}
+
+.detail-meta__item {
+  white-space: nowrap;
+}
+
+.detail-meta__label {
+  font-weight: 600;
+}
+
+.detail-meta__item--italic {
+  font-style: italic;
+}
+
+.detail-meta__item--italic .detail-meta__label {
+  font-style: normal; /* label stays non-italic, value italic */
+}
+
+/* Body text */
+.detail-body {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #111827;
+  letter-spacing: 0;
+  white-space: pre-wrap;
+}
+
+/* Loading / error states */
+.detail-loading {
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.detail-error-title {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #b91c1c;
+}
+
+.detail-error-text {
+  margin: 0;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .detail-main {
+    padding: 24px 16px 32px;
+  }
+
+  .detail-card {
+    padding: 24px 18px 28px;
+  }
+
+  .detail-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .detail-title {
+    font-size: 24px;
+  }
+
+  .detail-meta {
+    gap: 12px 20px;
+  }
+}

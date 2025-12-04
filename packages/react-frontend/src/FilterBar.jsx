@@ -57,6 +57,7 @@ const FilterBar = ({
         <option value="Malware">Malware</option>
         <option value="DDoS">DDoS</option>
         <option value="Phishing">Phishing</option>
+        <option value="Data Breach">Data Breach</option>
       </select>
 
       <button

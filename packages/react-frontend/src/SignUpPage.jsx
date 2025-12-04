@@ -58,11 +58,7 @@ function SignUpPage() {
                     return;
                   }
 
-                  // Registration success – you can either log them in automatically:
-                  // localStorage.setItem("isLoggedIn", "true");
-                  // navigate("/incidents");
-
-                  // or send them to the login page:
+                  // Registration success, login then incident dashboard
                   navigate("/login");
                 } catch (err) {
                   console.error("Register error (frontend):", err);

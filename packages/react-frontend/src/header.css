@@ -1,0 +1,84 @@
+/* NAV BASE */
+.nav {
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* BRAND SECTION */
+.nav__left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+/* Shield logo */
+.nav__shield {
+  width: 32px;
+  height: 32px;
+}
+
+/* Brand text using your .brand styles */
+.nav__brand {
+  font-weight: 600;   /* From your .brand class */
+  font-size: 20px;    /* From your .brand class */
+  color: hsl(0, 0%, 0%);
+  letter-spacing: -0.5px;
+}
+
+/* NAV LINKS */
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav__link {
+  font-size: 15px;
+  color: #4b5563;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.nav__link:hover {
+  color: #1f50ff;
+}
+
+.nav__link--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* USER SECTION */
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav__avatar {
+  width: 40px;
+  height: 40px;
+  background: #d1d5db;
+  border-radius: 50%;
+}
+
+.nav__user-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.nav__user-role {
+  font-size: 13px;
+  color: #6b7280;
+}

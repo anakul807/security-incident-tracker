@@ -1,57 +1,83 @@
 import mongoose from "mongoose";
 
-const IncidentSchema = new mongoose.Schema(
+const { Schema } = mongoose;
+
+const IncidentSchema = new Schema(
   {
     incidentId: {
       type: String,
       unique: true,
     },
+
     title: {
       type: String,
-      //Untitled placeholder in frontend
+      required: true,
+      trim: true,
     },
+
+    category: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    priority: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
     status: {
       type: String,
-      trim: true,
       required: true,
+      trim: true,
+      default: "Open",
     },
+
+    assignedToName: {
+      type: String,
+      default: "Unassigned",
+      trim: true,
+    },
+
+    assignedTo: {
+      type: Schema.Types.ObjectId,
+      ref: "userModel",
+      required: false,
+    },
+
     description: {
       type: String,
       trim: true,
-      //add description placeholder in frontend
     },
-    tags: {
-      //Stored as an array
-      type: [String],
-      default: [],
-    },
+
+    attachments: [
+      {
+        type: String,
+      },
+    ],
   },
   {
     collection: "incidents",
-    timestamps: true,
-  },
+  }
 );
 
-//Generate random unique ID
 IncidentSchema.pre("save", async function (next) {
   const doc = this;
-
-  //For only new documents
-  if (!doc.isNew) return next();
+  if (!doc.isNew || doc.incidentId) return next();
 
   let unique = false;
 
   while (!unique) {
-    //generates random 5 digit number
     const randNum = Math.floor(Math.random() * 90000) + 10000;
     const newId = `INC-${randNum}`;
 
-    //Making sure it's unique
     const existing = await mongoose.models.Incident.findOne({
       incidentId: newId,
     });
+
     if (!existing) {
-      doc.incidentID = newId;
+      doc.incidentId = newId;
       unique = true;
     }
   }
