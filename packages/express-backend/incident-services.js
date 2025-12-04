@@ -60,3 +60,7 @@ export function addIncident(data) {
   const incident = new Incident(data);
   return incident.save();
 }
+
+export function getIncidentById(id){
+  return Incident.findById(id);
+}

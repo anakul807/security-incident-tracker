@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { getIncidents, addIncident } from "./incident-services.js";
+import { getIncidents, addIncident, getIncidentById } from "./incident-services.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -183,32 +183,7 @@ app.post("/api/incidents", async (req, res) => {
   }
 });
 
-// // GET , get incidents
-// app.get("/api/incidents", (req, res) => {
-//   const { status, severity } = req.query;
-
-//   getIncidents({ status, severity })
-//     .then((incidents) => res.json({ incidents_list: incidents }))
-//     .catch((err) => res.status(500).send(err.message));
-// });
-
-// if (!uri) {
-//   console.error("Missing MONGO_URI in .env");
-//   process.exit(1);
-// }
-
-// try {
-//   await mongoose.connect(uri, { serverSelectionTimeoutMS: 8000 });
-//   console.log("Connected to MongoDB (Atlas)");
-//   app.listen(PORT, () =>
-//     console.log(`Server listening at http://localhost:${PORT}`),
-//   );
-// } catch (err) {
-//   console.error("MongoDB connection error:", err.message);
-//   process.exit(1);
-// }
-
-// // GET , get incidents
+// GET , get incidents
 app.get("/api/incidents", async (req, res) => {
   try {
     const {
@@ -243,6 +218,23 @@ app.get("/api/incidents", async (req, res) => {
   }
 });
 
+// Get incidents by id
+app.get("/api/incidents/:id", async (req, res) => {
+  try {
+    const incident = await getIncidentById(req.params.id);
+
+    if (!incident) {
+      return res.status(404).json({ message: "Incident not found" });
+    }
+
+    return res.json(incident);
+  } catch (err) {
+    console.error("Error fetching incident:", err);
+    return res
+      .status(500)
+      .json({ message: "Server error while fetching incident." });
+  }
+});
 
 
 // GET /users/:id fetching the user by mongoDB id
