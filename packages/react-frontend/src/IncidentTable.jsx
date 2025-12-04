@@ -1,5 +1,7 @@
 import React from "react";
 import { Download, Plus, Search } from "lucide-react";
+import Badge from "./Badge";
+
 
 const API_URL = "http://localhost:8085/api";
 
