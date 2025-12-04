@@ -15,7 +15,11 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"No tests yet\""
+    "test": "echo \"No tests yet\"",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js, jsx, json, md}": "prettier --write"
   },
   "workspaces": [
     "packages/*"
@@ -24,5 +28,9 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "mongoose": "^8.19.2"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7"
   }
 }
