@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./LoginPage";
 import SignUpPage from "./SignUpPage";
 import IncidentDashboard from "./IncidentDashboard";
+import IncidentDetail from "./IncidentDetail";
 import "./main.css";
 
 function ProtectedRoute({ children }) {
@@ -21,6 +22,7 @@ function AppRouter() {
         <Route path="/" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/incidents/:id" element={<IncidentDetail />}/>
         
 
         <Route

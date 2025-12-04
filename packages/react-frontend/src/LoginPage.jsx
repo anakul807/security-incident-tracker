@@ -59,7 +59,10 @@ function LoginPage() {
                   }
 
                   // Successful Login
+                  // localStorage.setItem("isLoggedIn", "true");
                   localStorage.setItem("isLoggedIn", "true");
+                  localStorage.setItem("user", JSON.stringify(data.user));
+
 
                   navigate("/incidents");
 

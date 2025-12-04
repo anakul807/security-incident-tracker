@@ -1,6 +1,7 @@
 import React from "react";
 import { Download, Plus, Search } from "lucide-react";
 import Badge from "./Badge";
+import { Link } from "react-router-dom";
 
 
 const API_URL = "http://localhost:8085/api";
@@ -54,7 +55,12 @@ const IncidentTable = ({ incidents, loading }) => {
               className="border-t hover:bg-gray-50 transition"
             >
               <td className="px-6 py-4">
-                <div className="font-semibold">{incident.title}</div>
+                <Link
+                  to={`/incidents/${incident._id}`}
+                  className="font-semibold text-blue-600 hover:underline"
+                >
+                  {incident.title}
+                </Link>
                 <div className="text-sm text-gray-500">
                   {incident.incidentId}
                 </div>
@@ -69,7 +75,7 @@ const IncidentTable = ({ incidents, loading }) => {
               <td className="px-6 py-4">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-                  <span>{incident.assignedTo}</span>
+                  <span>{incident.assignedToName || "Unassigned"}</span>
                 </div>
               </td>
               <td className="px-6 py-4 text-gray-600">
