@@ -53,27 +53,25 @@ function LoginPage() {
                   const data = await res.json();
 
                   if (!res.ok) {
-                    setError(data.message || "Login failed" );
+                    setError(data.message || "Login failed");
                     setLoading(false);
                     return;
                   }
 
                   // Successful Login
-                localStorage.setItem("isLoggedIn", "true");
+                  localStorage.setItem("isLoggedIn", "true");
 
-                navigate("/incidents");
+                  navigate("/incidents");
 
-                // TODO: Replace this with your backend login request
-                // console.log("Login submitted:", { username, password });
-                // alert(`Logged in as ${username}`);
-
+                  // TODO: Replace this with your backend login request
+                  // console.log("Login submitted:", { username, password });
+                  // alert(`Logged in as ${username}`);
                 } catch (err) {
                   console.error("Login error:", err);
                   setError("Network error, please try again.");
                 } finally {
                   setLoading(false);
                 }
-
               }}
             >
               <div className="field">
@@ -104,7 +102,7 @@ function LoginPage() {
               {error && <div className="error">{error}</div>}
 
               <div className="actions">
-                <button className="btn" type="submit" disabled ={loading}>
+                <button className="btn" type="submit" disabled={loading}>
                   {loading ? "Logging in..." : "Submit"}
                 </button>
               </div>

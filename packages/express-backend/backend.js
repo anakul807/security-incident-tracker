@@ -50,7 +50,7 @@ app.options("/login", async (req, res) => {
 
     // if there is no user OR password mismatch -> unauthorized
     if (!user || user.password !== password) {
-      return res.status(401).json({ message: "Invalid email or password"});
+      return res.status(401).json({ message: "Invalid email or password" });
     }
 
     const userObj = user.toObject ? user.toObject() : user;
@@ -60,14 +60,11 @@ app.options("/login", async (req, res) => {
       message: "Login successful",
       user: safeUser,
     });
+  } catch (err) {
+    console.err("Login error:", err);
+    return res.status(500).json({ message: "server error during login." });
   }
-  catch(err) {
-      console.err("Login error:", err);
-      return res 
-        .status(500)
-        .json({ message: "server error during login." });
-    }
-})
+});
 
 // Register account route
 app.post("/register", async (req, res) => {
@@ -76,7 +73,7 @@ app.post("/register", async (req, res) => {
 
   // if the user doesn't provide a username or password then return an error message
   if (!username || !password) {
-    return res 
+    return res
       .status(400)
       .json({ message: "Username and password are required." });
   }
@@ -85,9 +82,7 @@ app.post("/register", async (req, res) => {
     // check if the username already exists
     const existing = await findUserByUsername(username);
     if (existing) {
-      return res 
-        .status(409)
-        .json({ message: "Username already taken." });
+      return res.status(409).json({ message: "Username already taken." });
     }
 
     // if not existing --> add user to DB
@@ -109,8 +104,6 @@ app.post("/register", async (req, res) => {
       .status(500)
       .json({ message: "Server error during registration." });
   }
-
-
 });
 
 // Don't allow user to be logged in if they have not signed up
@@ -119,7 +112,7 @@ app.post("/login", async (req, res) => {
   console.log("/login body:", req.body);
 
   if (!username || !password) {
-    return res 
+    return res
       .status(400)
       .json({ message: "Username and password are required" });
   }
@@ -130,16 +123,12 @@ app.post("/login", async (req, res) => {
 
     // if there isn't a user then return an error message
     if (!user) {
-      return res 
-        .status(401)
-        .json({ message: "Invalid username or password." });
+      return res.status(401).json({ message: "Invalid username or password." });
     }
 
     // if the password doesn't match then return an error
     if (user.password !== password) {
-      return res  
-        .status(401)
-        .json({ message: "invalid username or password." });
+      return res.status(401).json({ message: "invalid username or password." });
     }
 
     // credentials are correct --> success
@@ -152,13 +141,9 @@ app.post("/login", async (req, res) => {
     });
   } catch (err) {
     console.error("Login error:", err);
-    return res 
-      .status(500)
-      .json({ message: "server error during login. "})
+    return res.status(500).json({ message: "server error during login. " });
   }
-
-
-})
+});
 
 app.get("/users", (req, res) => {
   const { name, job } = req.query;

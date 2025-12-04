@@ -44,7 +44,7 @@ export function findUserByNameAndJob(name, job) {
 
 export const findUserByUsername = (username) => {
   return userModel.findOne({ username });
-}
+};
 
 export default {
   addUser,
