@@ -5,6 +5,8 @@ import FilterBar from "./FilterBar";
 import IncidentTable from "./IncidentTable";
 import Pagination from "./Pagination";
 import MyApp from "./MyApp";
+import CreateIncident from './CreateIncident';
+
 
 const API_URL = "http://localhost:8085/api";
 
@@ -17,6 +19,7 @@ const IncidentDashboard = () => {
   const [totalIncidents, setTotalIncidents] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({});
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   // Fetch incidents from backend
   const fetchIncidents = async () => {
@@ -106,7 +109,13 @@ const IncidentDashboard = () => {
     }
   };
 
-  // ensure we always pass an array down to the table
+  const handleIncidentCreated = (newIncident) => {
+    // Refresh incidents list after creating a new one
+    fetchIncidents();
+    setIsCreateModalOpen(false);
+  };
+
+  // pass an array down to the table
   const safeIncidents2 = Array.isArray(incidents) ? incidents : [];
 
   return (
@@ -124,7 +133,10 @@ const IncidentDashboard = () => {
               <Download size={20} />
               Export CSV
             </button>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg flex items-center gap-2 hover:bg-blue-700 transition">
+            <button 
+              onClick={() => setIsCreateModalOpen(true)}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg flex items-center gap-2 hover:bg-blue-700 transition"
+            >
               <Plus size={20} />
               New Incident
             </button>
@@ -159,6 +171,11 @@ const IncidentDashboard = () => {
             )}
         </div>
       </main>
+      <CreateIncident 
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onIncidentCreated={handleIncidentCreated}
+      />
     </div>
   );
 };
