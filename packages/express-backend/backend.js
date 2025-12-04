@@ -5,7 +5,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { getIncidents } from "./incident-services.js";
+import { getIncidents, addIncident } from "./incident-services.js";
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,7 +18,6 @@ import {
   getUsers,
   findUserById,
   addUser,
-  findUserByNameAndJob,
   deleteUserById,
   findUserByUsername,
 } from "./user-services.js";
@@ -34,37 +34,37 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-// Login route
-app.options("/login", async (req, res) => {
-  const { username, password } = req.body;
+// // Login route
+// app.options("/login", async (req, res) => {
+//   const { username, password } = req.body;
 
-  // error check if no username or password are filled out
-  if (!username || !password) {
-    return res
-      .status(400)
-      .json({ message: "Email and password are required." });
-  }
+//   // error check if no username or password are filled out
+//   if (!username || !password) {
+//     return res
+//       .status(400)
+//       .json({ message: "Email and password are required." });
+//   }
 
-  try {
-    const user = await findUserByUsername(username);
+//   try {
+//     const user = await findUserByUsername(username);
 
-    // if there is no user OR password mismatch -> unauthorized
-    if (!user || user.password !== password) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+//     // if there is no user OR password mismatch -> unauthorized
+//     if (!user || user.password !== password) {
+//       return res.status(401).json({ message: "Invalid email or password" });
+//     }
 
-    const userObj = user.toObject ? user.toObject() : user;
-    const { password: _pw, ...safeUser } = userObj;
+//     const userObj = user.toObject ? user.toObject() : user;
+//     const { password: _pw, ...safeUser } = userObj;
 
-    return res.json({
-      message: "Login successful",
-      user: safeUser,
-    });
-  } catch (err) {
-    console.err("Login error:", err);
-    return res.status(500).json({ message: "server error during login." });
-  }
-});
+//     return res.json({
+//       message: "Login successful",
+//       user: safeUser,
+//     });
+//   } catch (err) {
+//     console.error("Login error:", err);
+//     return res.status(500).json({ message: "server error during login." });
+//   }
+// });
 
 // Register account route
 app.post("/register", async (req, res) => {
@@ -145,20 +145,105 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/users", (req, res) => {
-  const { name, job } = req.query;
-  let query;
+// POST /api/incidents, creating the new incident
+app.post("/api/incidents", async (req, res) => {
+  try {
+    const {
+      title,
+      category,
+      priority,
+      assignedTo,
+      description,
+      status,
+      attachments,
+    } = req.body;
 
-  if (name && job) {
-    query = findUserByNameAndJob(name, job);
-  } else {
-    query = getUsers(name, job);
+    if (!title || !category || !priority) {
+      return res
+        .status(400)
+        .json({ message: "Title, category, and priority are required." });
+    }
+
+    const newIncident = await addIncident({
+      title,
+      category,
+      priority,
+      status: status || "Open",
+      assignedToName: assignedTo || "Unassigned",
+      description,
+      attachments: attachments || [],
+    });
+
+    return res.status(201).json(newIncident);
+  } catch (err) {
+    console.error("Error creating incident:", err);
+    return res
+      .status(500)
+      .json({ message: "Server error while creating incident." });
   }
-
-  query
-    .then((users) => res.send({ users_list: users }))
-    .catch((err) => res.status(500).send(err.message));
 });
+
+// // GET , get incidents
+// app.get("/api/incidents", (req, res) => {
+//   const { status, severity } = req.query;
+
+//   getIncidents({ status, severity })
+//     .then((incidents) => res.json({ incidents_list: incidents }))
+//     .catch((err) => res.status(500).send(err.message));
+// });
+
+// if (!uri) {
+//   console.error("Missing MONGO_URI in .env");
+//   process.exit(1);
+// }
+
+// try {
+//   await mongoose.connect(uri, { serverSelectionTimeoutMS: 8000 });
+//   console.log("Connected to MongoDB (Atlas)");
+//   app.listen(PORT, () =>
+//     console.log(`Server listening at http://localhost:${PORT}`),
+//   );
+// } catch (err) {
+//   console.error("MongoDB connection error:", err.message);
+//   process.exit(1);
+// }
+
+// // GET , get incidents
+app.get("/api/incidents", async (req, res) => {
+  try {
+    const {
+      status,
+      severity,
+      priority,
+      category,
+      search,
+      page = "1",
+      limit = "5",
+    } = req.query;
+
+    const pageNum = Math.max(1, parseInt(page, 10) || 1);
+    const limitNum = Math.max(1, parseInt(limit, 10) || 5);
+
+    const result = await getIncidents({
+      status,
+      severity,
+      priority,
+      category,
+      search,
+      page: pageNum,
+      limit: limitNum,
+    });
+
+    return res.json(result);
+  } catch (err) {
+    console.error("Error fetching incidents:", err);
+    return res
+      .status(500)
+      .json({ message: "Server error while fetching incidents." });
+  }
+});
+
+
 
 // GET /users/:id fetching the user by mongoDB id
 app.get("/users/:id", (req, res) => {
@@ -212,12 +297,3 @@ try {
   console.error("MongoDB connection error:", err.message);
   process.exit(1);
 }
-
-// GET /incidents
-app.get("/api/incidents", (req, res) => {
-  const { status, severity } = req.query;
-
-  getIncidents({ status, severity })
-    .then((incidents) => res.json({ incidents_list: incidents }))
-    .catch((err) => res.status(500).send(err.message));
-});
