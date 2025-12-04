@@ -108,7 +108,7 @@ const IncidentDashboard = () => {
     }
   };
 
-  const handleIncidentCreated = (newIncident) => {
+  const handleIncidentCreated = () => {
     // Refresh incidents list after creating a new one
     fetchIncidents();
     setIsCreateModalOpen(false);

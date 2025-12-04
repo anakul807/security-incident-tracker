@@ -239,6 +239,17 @@ app.get("/api/incidents/:id", async (req, res) => {
   }
 });
 
+//Get /users
+app.get("/users", async (req, res) => {
+  try {
+    const users = await getUsers();
+    res.json(users); //sends array of users from the DB
+  } catch (err) {
+    console.error("Error fetching users:", err);
+    res.status(500).json({ message: "Server error while fetching users." });
+  }
+});
+
 // GET /users/:id fetching the user by mongoDB id
 app.get("/users/:id", (req, res) => {
   const id = req.params["id"];
