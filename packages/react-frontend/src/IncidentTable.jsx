@@ -3,7 +3,6 @@ import { Download, Plus, Search } from "lucide-react";
 import Badge from "./Badge";
 import { Link } from "react-router-dom";
 
-
 const API_URL = "http://localhost:8085/api";
 
 const IncidentTable = ({ incidents, loading }) => {

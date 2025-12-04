@@ -190,29 +190,32 @@ function CreateIncident({ isOpen, onClose, onIncidentCreated }) {
           </div>
 
           {error && (
-            <div className="error" style={{ 
-              marginBottom: "20px", 
-              padding: "12px", 
-              backgroundColor: "#fee2e2", 
-              color: "#b91c1c", 
-              borderRadius: "6px",
-              fontSize: "14px"
-            }}>
+            <div
+              className="error"
+              style={{
+                marginBottom: "20px",
+                padding: "12px",
+                backgroundColor: "#fee2e2",
+                color: "#b91c1c",
+                borderRadius: "6px",
+                fontSize: "14px",
+              }}
+            >
               {error}
             </div>
           )}
 
           <div className="form-actions">
-            <button 
-              type="button" 
-              className="cancel-button" 
+            <button
+              type="button"
+              className="cancel-button"
               onClick={onClose}
               disabled={isSubmitting}
             >
               Cancel
             </button>
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="submit-button"
               disabled={isSubmitting}
               style={{ margin: "0 auto" }}

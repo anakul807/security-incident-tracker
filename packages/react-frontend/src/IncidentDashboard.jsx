@@ -4,9 +4,8 @@ import Header from "./Header";
 import FilterBar from "./FilterBar";
 import IncidentTable from "./IncidentTable";
 import Pagination from "./Pagination";
-import CreateIncident from './CreateIncident';
+import CreateIncident from "./CreateIncident";
 import Badge from "./Badge";
-
 
 const API_URL = "http://localhost:8085/api";
 
@@ -133,7 +132,7 @@ const IncidentDashboard = () => {
               <Download size={20} />
               Export CSV
             </button>
-            <button 
+            <button
               onClick={() => setIsCreateModalOpen(true)}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg flex items-center gap-2 hover:bg-blue-700 transition"
             >
@@ -171,7 +170,7 @@ const IncidentDashboard = () => {
             )}
         </div>
       </main>
-      <CreateIncident 
+      <CreateIncident
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
         onIncidentCreated={handleIncidentCreated}

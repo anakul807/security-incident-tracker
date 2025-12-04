@@ -5,8 +5,11 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { getIncidents, addIncident, getIncidentById } from "./incident-services.js";
-
+import {
+  getIncidents,
+  addIncident,
+  getIncidentById,
+} from "./incident-services.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -235,7 +238,6 @@ app.get("/api/incidents/:id", async (req, res) => {
       .json({ message: "Server error while fetching incident." });
   }
 });
-
 
 // GET /users/:id fetching the user by mongoDB id
 app.get("/users/:id", (req, res) => {

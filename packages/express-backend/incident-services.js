@@ -40,10 +40,7 @@ export async function getIncidents({
   const skip = (page - 1) * limit;
 
   const [incidents, totalIncidents] = await Promise.all([
-    Incident.find(query)
-      .sort({ _id: -1 })
-      .skip(skip)
-      .limit(limit),
+    Incident.find(query).sort({ _id: -1 }).skip(skip).limit(limit),
     Incident.countDocuments(query),
   ]);
 
@@ -61,6 +58,6 @@ export function addIncident(data) {
   return incident.save();
 }
 
-export function getIncidentById(id){
+export function getIncidentById(id) {
   return Incident.findById(id);
 }
