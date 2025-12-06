@@ -11,6 +11,7 @@ import {
   getIncidentById,
 } from "./incident-services.js";
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -302,3 +303,23 @@ try {
   console.error("MongoDB connection error:", err.message);
   process.exit(1);
 }
+
+//TESTING
+import Test from "./test.js";
+
+// GET
+app.get("/test", (req, res) => {
+  res.json({ message: "GET WORKING" });
+});
+
+// POST
+app.post("/test", async (req, res) => {
+  try {
+    const doc = new Test(req.body);
+    const saved = await doc.save();
+    res.json(saved);
+  } catch (err) {
+    console.error("POST test error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
