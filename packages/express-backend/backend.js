@@ -38,38 +38,6 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-// // Login route
-// app.options("/login", async (req, res) => {
-//   const { username, password } = req.body;
-
-//   // error check if no username or password are filled out
-//   if (!username || !password) {
-//     return res
-//       .status(400)
-//       .json({ message: "Email and password are required." });
-//   }
-
-//   try {
-//     const user = await findUserByUsername(username);
-
-//     // if there is no user OR password mismatch -> unauthorized
-//     if (!user || user.password !== password) {
-//       return res.status(401).json({ message: "Invalid email or password" });
-//     }
-
-//     const userObj = user.toObject ? user.toObject() : user;
-//     const { password: _pw, ...safeUser } = userObj;
-
-//     return res.json({
-//       message: "Login successful",
-//       user: safeUser,
-//     });
-//   } catch (err) {
-//     console.error("Login error:", err);
-//     return res.status(500).json({ message: "server error during login." });
-//   }
-// });
-
 // Register account route
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
